@@ -34,7 +34,8 @@ class PlayerServices{
             if(foundUser){
                 if(await bcrypt.compare(userData.password, foundUser.password)){
                     console.log("email true but password true");
-                    return true;
+                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"messi")   
+                    return token;
                 }else{
                     console.log("email true but password false");
                     return false;
