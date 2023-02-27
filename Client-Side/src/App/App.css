@@ -1,0 +1,13 @@
+.form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+} 
+.MyBody{
+min-height: 77vh;
+}
+/* #reg{
+    background-image: url("/src/images/Register.svg") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+} */
