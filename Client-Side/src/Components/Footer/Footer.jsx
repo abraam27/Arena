@@ -3,6 +3,7 @@ import style from './footer.module.css'
 
 export default function Footer() {
     console.log("This is footer inshallah");
+    console.log("This is Bero Branch");
     return (
         <div  >
             <footer className={style.footer_distributed}>
