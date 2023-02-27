@@ -6,10 +6,11 @@ var GetAllFields = async (req, res)=>{
 var GetFieldByID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetFieldByID(req.params.id));
 };
-var AddNewField = (req, res)=>{
-    var newField = new FieldServices(req.body);
+var AddNewField = async(req, res)=>{
+    var newField = new FieldServices(req.body.fieldName,req.body.location,req.body.price,"3",req.body.fieldOwnerId,"0");
+    console.log(newField);
     if(FieldValidate(newField)){
-        if(newField.AddField()){
+        if(await newField.AddField()){
             res.status(201).send("Add Successfully !");
         }else{
             res.status(400).send("Not Added !");

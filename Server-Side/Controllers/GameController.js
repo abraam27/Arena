@@ -7,7 +7,8 @@ var GetGameByID = async (req, res)=>{
     res.status(200).json(await GameServices.GetGameByID(req.params.id));
 };
 var AddNewGame = (req, res)=>{
-    var newGame = new GameServices(req.body);
+    var newGame = new GameServices(req.body.playerId,req.body.fieldId,req.body.date,req.body.hour,"","","");
+    console.log(newGame);
     if(GameValidate(newGame)){
         if(newGame.AddGame()){
             res.status(201).send("Add Successfully !");
