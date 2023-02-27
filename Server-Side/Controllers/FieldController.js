@@ -1,0 +1,46 @@
+const FieldValidate = require("../Utils/FieldValidation");
+const FieldServices = require("../Services/FieldServices");
+var GetAllFields = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetAllFields());
+};
+var GetFieldByID = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetFieldByID(req.params.id));
+};
+var AddNewField = (req, res)=>{
+    var newField = new FieldServices(req.body);
+    if(FieldValidate(newField)){
+        if(newField.AddField()){
+            res.status(201).send("Add Successfully !");
+        }else{
+            res.status(400).send("Not Added !");
+        }
+    }else{
+        res.status(400).send("Validation Not Added !");
+    }
+};
+var UpdateField = (req, res)=>{
+    var updatedField = new FieldServices(req.body);
+    if(FieldValidate(updatedField)){
+        if(updatedField.UpdateField(req.params.id)){
+            res.status(201).send("Updated Successfully !");
+        }else{
+            res.status(400).send("Not Updated !");
+        }
+    }else{
+        res.status(400).send("Validation Not Added !");
+    }
+};
+var DeleteField = async (req, res)=>{
+    if(FieldServices.DeleteField(req.params.id)){
+        res.status(201).send("Deleted Successfully !");
+    }else{
+        res.status(400).send("Not Deleted !");
+    }
+};
+module.exports = {
+    GetAllFields,
+    GetFieldByID,
+    AddNewField,
+    UpdateField,
+    DeleteField
+};

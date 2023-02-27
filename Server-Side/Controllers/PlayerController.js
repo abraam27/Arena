@@ -1,0 +1,69 @@
+const PlayerValidate = require("../Utils/PlayerValidation");
+const AuthValidation = require("../Utils/AuthValidation");
+const PlayerServices = require("../Services/PlayerServices");
+const bcrypt= require("bcrypt");
+
+const Ajv = require("ajv");
+var ajv = new Ajv();
+var UserLogin = async (req, res)=>{
+    var userData = req.body;
+    if(AuthValidation(userData)){
+        const token = await PlayerServices.LoginUser(userData)
+        if(token){
+            res.header("X-Auth-Token", token)
+            res.status(200).send("Logged in");
+        }else{
+            res.status(400).send("Not Logged in");
+        }
+    }else{
+        res.status(400).send("Not Valid !");
+    }
+}
+var GetAllPlayers = async (req, res)=>{
+    res.status(200).json(await PlayerServices.GetAllPlayers());
+};
+var GetPlayerByID = async (req, res)=>{
+    res.status(200).json(await PlayerServices.GetPlayerByID(req.params.id));
+};
+var AddNewPlayer = async (req, res)=>{
+    var HashedPassword = await bcrypt.hash(req.body.password,10);
+    var newPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword);
+    var newplayerr = {...newPlayer, password:req.body.password};
+    if(PlayerValidate(newplayerr)){
+        if(await newPlayer.AddPlayer()){
+            res.status(201).send("Add Successfully !");
+        }else{
+            res.status(400).send("Not Added !");
+        }
+    }else{
+        res.status(400).send("Validation Not Added !");
+        console.log(PlayerValidate.errors)
+    }
+};
+var UpdatePlayer = (req, res)=>{
+    var updatedPlayer = new PlayerServices(req.body);
+    if(PlayerValidate(updatedPlayer)){
+        if(updatedPlayer.UpdatePlayer(req.params.id)){
+            res.status(201).send("Updated Successfully !");
+        }else{
+            res.status(400).send("Not Updated !");
+        }
+    }else{
+        res.status(400).send("Validation Not Added !");
+    }
+};
+var DeletePlayer = async (req, res)=>{
+    if(PlayerServices.DeletePlayer(req.params.id)){
+        res.status(201).send("Deleted Successfully !");
+    }else{
+        res.status(400).send("Not Deleted !");
+    }
+};
+module.exports = {
+    GetAllPlayers,
+    GetPlayerByID,
+    AddNewPlayer,
+    UpdatePlayer,
+    DeletePlayer,
+    UserLogin
+};
