@@ -55,3 +55,30 @@ app.use("/api/login",authRoutes);
 //#endregion
 
 app.listen(PORT, ()=>{console.log("http://localhost:"+PORT)})
+
+
+//#region player service
+
+// async UpdatePlayer(id){
+//     if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+//         return true;
+//     }else{
+//         return false;
+//     }
+// } 
+
+//#region playercontroller
+
+// var UpdatePlayer = async (req, res)=>{
+//     var HashedPassword = await bcrypt.hash(req.body.password,10);
+//     var updatedPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword);
+//     if(PlayerValidate(updatedPlayer)){
+//         if(updatedPlayer.UpdatePlayer(req.params.id)){
+//             res.status(200).send("Updated Successfully !");
+//         }else{
+//             res.status(400).send("Not Updated !");
+//         }
+//     }else{
+//         res.status(400).send("Validation Not Added !");
+//     }
+// };

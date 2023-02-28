@@ -23,7 +23,11 @@ class FieldServices{
         
     }
     async UpdateField(id){
-        return await Field.updateOne({_id:id}, {});
+        if(await Field.updateOne({_id:id}, {fieldName: this.fieldName, location: this.location, price: this.price, rate: this.rate, fieldOwnerId: this.fieldOwnerId,valid:this.valid})){
+                    return true;
+                }else{
+                    return false;
+                }
     }
     static async DeleteField(id){
         return await Field.deleteOne({ _id:id});

@@ -20,9 +20,9 @@ var AddNewField = async(req, res)=>{
     }
 };
 var UpdateField = (req, res)=>{
-    var updatedField = new FieldServices(req.body);
+    var updatedField = new FieldServices(req.body.fieldName,req.body.location,req.body.price,req.body.rate,req.body.fieldOwnerId,req.body.valid);
     if(FieldValidate(updatedField)){
-        if(updatedField.UpdateField(req.params.id)){
+        if(updatedField.UpdateField(req.body._id)){
             res.status(201).send("Updated Successfully !");
         }else{
             res.status(400).send("Not Updated !");

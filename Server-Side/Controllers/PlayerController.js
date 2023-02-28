@@ -27,7 +27,7 @@ var GetPlayerByID = async (req, res)=>{
 };
 var AddNewPlayer = async (req, res)=>{
     var HashedPassword = await bcrypt.hash(req.body.password,10);
-    var newPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword);
+    var newPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword,"player");
     var newplayerr = {...newPlayer, password:req.body.password};
     if(PlayerValidate(newplayerr)){
         if(await newPlayer.AddPlayer()){
@@ -60,11 +60,31 @@ var DeletePlayer = async (req, res)=>{
         res.status(400).send("Not Deleted !");
     }
 };
+var GetAllGames = async (req, res)=>{
+    let games =await PlayerServices.GetAllGames(req.params.id)
+    if(games){
+        res.status(201).json(games);
+    }else{
+        res.status(400).send("there is no games !");
+    }
+};
+var GetGame = async (req, res)=>{
+    let games =await PlayerServices.GetGame(req.params.id,req.params.gameId)
+    if(games){
+        res.status(201).json(games);
+    }else{
+        res.status(400).send("there is no games !");
+    }
+};
+
+
 module.exports = {
     GetAllPlayers,
     GetPlayerByID,
     AddNewPlayer,
     UpdatePlayer,
     DeletePlayer,
-    PlayerLogin
+    PlayerLogin,
+    GetAllGames,
+    GetGame
 };
