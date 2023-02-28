@@ -1,7 +1,5 @@
 import Joi from "joi-browser";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const FieldForm = ({ setFormIsVisible }) => {
   //TODO need to send the fieldOwner ID
@@ -42,8 +40,8 @@ const FieldForm = ({ setFormIsVisible }) => {
 
   return (
     <div>
-      <div className="w-50 mx-auto ">
-        <h1 className="texttik m-4 d-flex justify-content-center">
+      <div className="w-100  mx-auto  p-3">
+        <h1 className="texttik m-4 d-flex justify-content-center ">
           Field Details
         </h1>
 
@@ -99,7 +97,11 @@ const FieldForm = ({ setFormIsVisible }) => {
                 Please enter all fields!
               </div>
             )}
-            <input type="submit" value="Add Field " />
+            <input
+              className="btn btn-outline-success"
+              type="submit"
+              value="Add Field "
+            />
           </div>
         </form>
       </div>
