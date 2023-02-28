@@ -17,11 +17,11 @@ class PlayerServices{
             foundUser = await Player.findOne({userName:userData.userName}).exec();
             if(foundUser){
                 if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("username true but password true");
-                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"messi")   
+                    console.log("-- Done -- username is true & password is true");
+                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"Messi"); 
                     return token;
                 }else{
-                    console.log("username true but password false");
+                    console.log(" -- Unfortunately -- username is true but password is false");
                     return false;
     
                 }
@@ -33,11 +33,11 @@ class PlayerServices{
             foundUser = await Player.findOne({email:userData.email}).exec();
             if(foundUser){
                 if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("email true but password true");
+                    console.log("-- Done -- email is true & password is true");
                     const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"messi")   
                     return token;
                 }else{
-                    console.log("email true but password false");
+                    console.log("-- Unfortunately --  email is true but password is false");
                     return false;
     
                 }
@@ -57,8 +57,8 @@ class PlayerServices{
     }
     async AddPlayer(){
         var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password});
-        let foundUser = await Player.find({userName:newPlayer.userName}).exec();//null
-        if(foundUser.length==0){
+        let foundPlayer = await Player.find({userName:newPlayer.userName}).exec();//null
+        if(foundPlayer.length==0){
             //Please Login
             await newPlayer.save();
             return true;
@@ -68,7 +68,11 @@ class PlayerServices{
         }
     }
     async UpdatePlayer(id){
-        return await Player.updateOne({_id:id}, {});
+        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+            return true;
+        }else{
+            return false;
+        }
     }
     static async DeletePlayer(id){
         return await Player.deleteOne({ _id:id});

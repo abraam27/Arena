@@ -12,7 +12,7 @@ class FieldServices{
         return await Field.find({});
     }
     static async GetFieldByID(id){
-        return await Field.findById(id);;
+        return await Field.findById(id);
     }
     async AddField(){
         var newField = new Field({ fieldName: this.fieldName, location: this.location, price: this.price, rate: this.rate, fieldOwnerId: this.fieldOwnerId,valid:this.valid});
@@ -27,6 +27,12 @@ class FieldServices{
     }
     static async DeleteField(id){
         return await Field.deleteOne({ _id:id});
+    }
+    static async GetAllFieldsByFieldOwnerID(id){
+        return await FieldOwner.find({fieldOwnerId:id});;
+    }
+    static async GetFieldByIDByFieldOwnerID(id){
+        return await FieldOwner.find({fieldOwnerId:id});;
     }
 }
 module.exports = FieldServices;

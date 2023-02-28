@@ -8,9 +8,9 @@ router.get("/:id",PlayerController.GetPlayerByID);
 // add new Player
 router.post("/add",PlayerController.AddNewPlayer);
 // update Player by id
-router.put("/update/:id",PlayerController.UpdatePlayer);
+router.put("/update",PlayerController.UpdatePlayer);
 // delete Player by id
 router.delete("/delete/:id",PlayerController.DeletePlayer);
-// login User
-router.get("/login",PlayerController.UserLogin);
+// login Player
+router.post("/login",PlayerController.PlayerLogin);
 module.exports = router;

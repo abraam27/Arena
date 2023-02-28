@@ -10,6 +10,14 @@ const PORT = process.env.PORT || 7500
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+    // Attach CORS headers
+    // Required when using a detached backend (that runs on a different domain)
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
 
 //#region For courses [CRUD] [Creat-Read-Update-Delete]
 const CourseRoutes = require("./Routes/CourseRoutes");
