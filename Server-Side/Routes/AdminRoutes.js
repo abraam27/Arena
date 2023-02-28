@@ -14,7 +14,7 @@ router.get("/player/:id",PlayerController.GetPlayerByID);
 // delete Player by id
 router.delete("/player/delete/:id",PlayerController.DeletePlayer);
 // login User
-router.get("/login",PlayerController.UserLogin);
+router.get("/login",PlayerController.PlayerLogin);
 //#endregion of player
 
 //#region of fields

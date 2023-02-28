@@ -35,8 +35,5 @@ class FieldServices{
     static async GetAllFieldsByFieldOwnerID(id){
         return await FieldOwner.find({fieldOwnerId:id});;
     }
-    static async GetFieldByIDByFieldOwnerID(id){
-        return await FieldOwner.find({fieldOwnerId:id});;
-    }
 }
 module.exports = FieldServices;

@@ -41,15 +41,11 @@ var DeleteField = async (req, res)=>{
 var GetAllFieldsByFieldOwnerID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetAllFieldsByFieldOwnerID(req.params.id));
 };
-var GetFieldByIDByFieldOwnerID = async (req, res)=>{
-    res.status(200).json(await FieldServices.GetFieldByIDByFieldOwnerID(req.params.fieldOwnerID, req.params.fieldID));
-};
 module.exports = {
     GetAllFields,
     GetFieldByID,
     AddNewField,
     UpdateField,
     DeleteField,
-    GetAllFieldsByFieldOwnerID,
-    GetFieldByIDByFieldOwnerID
+    GetAllFieldsByFieldOwnerID
 };
