@@ -23,11 +23,18 @@ class GameServices{
             return true;
         
     }
-    async UpdateGame(id){
-        return await Game.updateOne({_id:id}, {});
-    }
+    
     static async DeleteGame(id){
         return await Game.deleteOne({ _id:id});
     }
+
+    async UpdateGame(id){
+    if(await Player.updateOne({_id:id}, {playerId:this.playerId,fieldId:this.fieldId,date:this.date,hour:this.hour,rate:this.rate,complain:this.complain,comment:this.comment})){
+        return true;
+    }else{
+        return false;
+    }
+} 
+
 }
 module.exports = GameServices;

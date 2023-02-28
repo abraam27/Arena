@@ -20,9 +20,9 @@ var AddNewGame = (req, res)=>{
     }
 };
 var UpdateGame = (req, res)=>{
-    var updatedGame = new GameServices(req.body);
+    var updatedGame = new GameServices(req.body.playerId,req.body.fieldId,req.body.date,req.body.hour,req.body.rate,req.body.complain,req.body.comment);
     if(GameValidate(updatedGame)){
-        if(updatedGame.UpdateGame(req.params.id)){
+        if(updatedGame.UpdateGame(req.body._id)){
             res.status(201).send("Updated Successfully !");
         }else{
             res.status(400).send("Not Updated !");

@@ -1,8 +1,9 @@
 const Player = require("../Models/PlayerModel");
 const bcrypt= require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const Game = require("../Models/GameModel");
 class PlayerServices{
-    constructor(fullName,phone,birthDate,location,email,userName,password){
+    constructor(fullName,phone,birthDate,location,email,userName,password,role){
         this.fullName = fullName;
         this.phone = phone;
         this.birthDate = birthDate;
@@ -10,6 +11,7 @@ class PlayerServices{
         this.email = email;
         this.userName = userName;
         this.password = password;
+        this.role=role;
     }
     static async LoginUser(userData){
         var foundUser;
@@ -72,5 +74,36 @@ class PlayerServices{
     static async DeletePlayer(id){
         return await Player.deleteOne({ _id:id});
     }
+
+    static async GetAllGames (pid){
+      let allGames = await Game.find({}).exec();//null
+    //   console.log(allGames);
+         
+        let foundGames =allGames.filter((p) =>{
+            return (
+                p.playerId == pid
+                );        
+        });
+        // console.log(foundGames);
+        return  foundGames;
+
+
+    }
+
+    static async GetGame (pid,gameId){
+        let allGames = await Game.find({}).exec();//null
+      //   console.log(allGames);
+           
+          let foundGame =allGames.filter((p) =>{
+              return (
+                  p.playerId == pid&&
+                  p._id==gameId
+                  );        
+          });
+          console.log(foundGame);
+          return  foundGame;
+  
+  
+      }
 }
 module.exports = PlayerServices;
