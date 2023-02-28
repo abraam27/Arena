@@ -18,23 +18,22 @@ class GameServices{
     async AddGame(){
         var newGame = new Game ({playerId:this.playerId,fieldId:this.fieldId,date:this.date,hour:this.hour,rate:this.rate,complain:this.complain,comment:this.comment });
         // let foundUser = await Field.find({fieldName:newField.fieldName}).exec();//null
-        
-            await newGame.save();
-            return true;
-        
+        await newGame.save();
+        return true;
     }
-    
     static async DeleteGame(id){
         return await Game.deleteOne({ _id:id});
     }
-
     async UpdateGame(id){
-    if(await Player.updateOne({_id:id}, {playerId:this.playerId,fieldId:this.fieldId,date:this.date,hour:this.hour,rate:this.rate,complain:this.complain,comment:this.comment})){
-        return true;
-    }else{
-        return false;
+        if(await Player.updateOne({_id:id}, {playerId:this.playerId,fieldId:this.fieldId,date:this.date,hour:this.hour,rate:this.rate,complain:this.complain,comment:this.comment})){
+            return true;
+        }else{
+            return false;
+        }
     }
-} 
+    static async GetAllGamesByFieldID(id){
+        return await FieldOwner.find({fieldId:id});;
+    }
 
 }
 module.exports = GameServices;

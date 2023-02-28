@@ -1,7 +1,32 @@
 const FieldOwner = require("../Models/FieldOwnerModel");
 class FieldOwnerServices{
-    constructor(){
-        
+    constructor(fullName,phone,userName,password){
+        this.fullName = fullName;
+        this.phone = phone;
+        this.userName = userName;
+        this.password = password;
+    }
+    static async LoginFieldOwner(fieldOwnerData){
+        var foundUser;
+        if(fieldOwnerData.userName){
+            foundUser = await FieldOwner.findOne({userName:fieldOwnerData.userName}).exec();
+            if(foundUser){
+                if(await bcrypt.compare(fieldOwnerData.password, foundUser.password)){
+                    console.log("username true and password true");
+                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, userName:foundUser.userName},"messi")   
+                    return token;
+                }else{
+                    console.log("username true but password false");
+                    return false;
+    
+                }
+            }else{
+                console.log("username false");
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
     static async GetAllFieldOwners(){
         return await FieldOwner.find({});
@@ -10,11 +35,23 @@ class FieldOwnerServices{
         return await FieldOwner.findById(id);;
     }
     async AddFieldOwner(){
-        var newFieldOwner = new FieldOwner({});
-        return await newFieldOwner.save();
+        var newFieldOwner = new FieldOwner({ fullName: this.fullName, phone: this.phone, userName: this.userName, password: this.password});
+        let foundFieldOwner = await FieldOwner.find({userName:newFieldOwner.userName}).exec();//null
+        if(foundFieldOwner.length==0){
+            //Please Login
+            await newFieldOwner.save();
+            return true;
+        }else{
+            return false;
+           
+        }
     }
     async UpdateFieldOwner(id){
-        return await FieldOwner.updateOne({_id:id}, {});
+        if(await FieldOwner.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+            return true;
+        }else{
+            return false;
+        }
     }
     static async DeleteFieldOwner(id){
         return await FieldOwner.deleteOne({ _id:id});

@@ -38,10 +38,14 @@ var DeleteField = async (req, res)=>{
         res.status(400).send("Not Deleted !");
     }
 };
+var GetAllFieldsByFieldOwnerID = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetAllFieldsByFieldOwnerID(req.params.id));
+};
 module.exports = {
     GetAllFields,
     GetFieldByID,
     AddNewField,
     UpdateField,
-    DeleteField
+    DeleteField,
+    GetAllFieldsByFieldOwnerID
 };

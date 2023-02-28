@@ -38,10 +38,14 @@ var DeleteGame = async (req, res)=>{
         res.status(400).send("Not Deleted !");
     }
 };
+var GetAllGamesByFieldID = async (req, res)=>{
+    res.status(200).json(await GameServices.GetAllGamesByFieldID(req.params.id));
+};
 module.exports = {
     GetAllGames,
     GetGameByID,
     AddNewGame,
     UpdateGame,
-    DeleteGame
+    DeleteGame,
+    GetAllGamesByFieldID
 };

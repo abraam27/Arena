@@ -5,13 +5,13 @@ const bcrypt= require("bcrypt");
 
 const Ajv = require("ajv");
 var ajv = new Ajv();
-var UserLogin = async (req, res)=>{
+var PlayerLogin = async (req, res)=>{
     var userData = req.body;
     if(AuthValidation(userData)){
         const token = await PlayerServices.LoginUser(userData)
         if(token){
             res.header("X-Auth-Token", token)
-            res.status(200).send("Logged in");
+            res.status(200).send("Logged in successfully");
         }else{
             res.status(400).send("Not Logged in");
         }
@@ -37,14 +37,15 @@ var AddNewPlayer = async (req, res)=>{
         }
     }else{
         res.status(400).send("Validation Not Added !");
-        console.log(PlayerValidate.errors)
+        console.log(PlayerValidate.errors);
     }
 };
-var UpdatePlayer = (req, res)=>{
-    var updatedPlayer = new PlayerServices(req.body);
+var UpdatePlayer = async (req, res)=>{
+    var HashedPassword = await bcrypt.hash(req.body.password,10);
+    var updatedPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword);
     if(PlayerValidate(updatedPlayer)){
-        if(updatedPlayer.UpdatePlayer(req.params.id)){
-            res.status(201).send("Updated Successfully !");
+        if(updatedPlayer.UpdatePlayer(req.body._id)){
+            res.status(200).send("Updated Successfully !");
         }else{
             res.status(400).send("Not Updated !");
         }
@@ -83,7 +84,7 @@ module.exports = {
     AddNewPlayer,
     UpdatePlayer,
     DeletePlayer,
-    UserLogin,
+    PlayerLogin,
     GetAllGames,
     GetGame
 };
