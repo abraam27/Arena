@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const PlayerController = require("../Controllers/PlayerController");
+const GameController = require("../Controllers/GameController");
+
 // get all Players
 router.get("/",PlayerController.GetAllPlayers)
 // get Player by id
@@ -13,4 +15,12 @@ router.put("/update/:id",PlayerController.UpdatePlayer);
 router.delete("/delete/:id",PlayerController.DeletePlayer);
 // login User
 router.get("/login",PlayerController.UserLogin);
+// get the uaser his all reservations
+router.get("/games/:id",PlayerController.GetAllGames)
+// get specific reservation by Id
+router.get("/games/:id/:gameId",PlayerController.GetGame)
+// create game
+router.get("/games/create",GameController.AddNewGame)
+// delete game
+router.get("/games/:id",GameController.DeleteGame)
 module.exports = router;
