@@ -31,7 +31,8 @@ const RegistrationForm = ({
     }
     let myUser = { ...user };
     myUser[name] = value;
-    setUser(myUser);
+      setUser(myUser);
+     
     setError(errorData);
   };
 
@@ -45,6 +46,19 @@ const RegistrationForm = ({
           onSubmit={formSubmit}
           className="justify-content-center rounded">
           <div className="form-group  row mt-2 mb-4">
+            <label htmlFor="role" className="col-sm-3 col-form-label fs-5">
+              Role
+            </label>
+            <div
+              className="col-sm-9"
+              value={user.location}
+              onBlur={onBlurHandler}
+              onChange={handleSave}>
+              <select name="role" id="role" className=" form-control">
+                <option value="player">Player</option>
+                <option value="fieldOwner">Field Owner</option>
+              </select>
+            </div>
             <label htmlFor="full-name" className="col-sm-3 col-form-label fs-5">
               Full Name
             </label>

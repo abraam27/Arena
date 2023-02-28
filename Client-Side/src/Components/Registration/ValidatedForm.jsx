@@ -12,6 +12,7 @@ const RegistrationValidation = ({ loggedIn }) => {
     location: "",
     email: "",
     password: "",
+    role: "player",
   });
   let [error, setError] = useState({});
 
@@ -28,27 +29,27 @@ const RegistrationValidation = ({ loggedIn }) => {
       .email({ tlds: { allow: ["com", "net", "org"] } })
       .required(),
     password: Joi.string().min(6).required(),
+    role: Joi.string().required(),
   };
-   async function formSubmit(e) {
-     await fetch("http://localhost:7500/api/players/add", {
-       method: "POST",
-       body: JSON.stringify(user),
-       headers: {
-         "Content-Type": "application/json",
-       },
-     });
-     loggedIn.setIsLoggedIn(true);
-     navigate("/");
-   }
-    
+  async function formSubmit(e) {
+    await fetch("http://localhost:7500/api/players/add", {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    loggedIn.setIsLoggedIn(true);
+    navigate("/");
+  }
+
   let validateForm = (e) => {
     e.preventDefault();
     let result = Joi.validate(user, schema, { abortEarly: false });
-    
+
     const { error } = result;
     if (!error) {
-      
-   formSubmit()
+      formSubmit();
     } else {
       const errorData = {};
       for (let users of error.details) {
@@ -79,8 +80,8 @@ const RegistrationValidation = ({ loggedIn }) => {
       setError={setError}
       loggedIn={loggedIn}
       user={user}
-          setUser={setUser}
-          formSubmit={formSubmit}
+      setUser={setUser}
+      formSubmit={formSubmit}
     />
   );
 };

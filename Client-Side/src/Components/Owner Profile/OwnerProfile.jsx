@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import FieldForm from "./FieldForm";
 import "./OwnerProfile.css";
 const OwnerProfile = () => {
+  const [formIsVisible, setFormIsVisible] = useState(false);
+  function addField() {
+    setFormIsVisible(true);
+  }
   return (
     <>
-      <div className="row">
-        <div className="col-3 bg-success">
-          <h1>adsdsds</h1>
+      {!formIsVisible && (
+        <div className="row justify-content-between">
+          <div className="col-3 bg-success">
+            <h1>image</h1>
+          </div>
+          <div className="col-2 bg-light ">
+            <button
+              type="button"
+              onClick={addField}
+              data-toggle="toggle"
+              className="btn btn-success">
+              Add Field
+            </button>
+          </div>
         </div>
-        <div className="col-9 bg-light">
-          <button type="button" class="btn btn-success">
-            Success
-          </button>
-        </div>
-      </div>
+      )}
+      {formIsVisible && (
+        <FieldForm setFormIsVisible={setFormIsVisible}></FieldForm>
+      )}
     </>
   );
 };
