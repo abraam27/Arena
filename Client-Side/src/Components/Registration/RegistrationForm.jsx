@@ -31,8 +31,8 @@ const RegistrationForm = ({
     }
     let myUser = { ...user };
     myUser[name] = value;
-      setUser(myUser);
-     
+    setUser(myUser);
+
     setError(errorData);
   };
 
@@ -131,8 +131,8 @@ const RegistrationForm = ({
               onChange={handleSave}>
               <select name="location" id="location" className=" form-control">
                 <optgroup label="New Cairo">
-                  <option value="first-set">First settlement</option>
-                  <option value="fifth-set">Fifth settlement</option>
+                  <option value="first">First Settlement</option>
+                  <option value="fifth">Fifth Settlement</option>
                 </optgroup>
                 <optgroup label="Nasr City">
                   <option value="makram">Makram Ebeed</option>

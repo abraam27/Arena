@@ -2,40 +2,40 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-export default function Login({ loggedIn }) {
+export default function Login(props) {
   let [user, setUser] = useState({
-    email: "",
-    password: "",
+    userName: "",
+    password: ""
   });
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
+
   function getUser(e) {
-    let myUser = { ...user };
-    myUser[e.target.name] = e.target.value;
-    setUser(myUser);
+    if (e.target.value.includes("@")) {
+      setUser({ email: "", password: "" });
+      let myUser = { ...user };
+      myUser[e.target.name] = e.target.value;
+      let userWithEmail = { email: myUser.userName, password: myUser.password };
+      setUser(userWithEmail);
+    } else {
+      let myUser = { ...user };
+      myUser[e.target.name] = e.target.value;
+      setUser(myUser);
+    }
   }
-  console.log("sdasd")
-  // console.log(loggedIn)
 
   async function formSubmit(e) {
     e.preventDefault();
-    // let res = await fetch("http://localhost:7500/api/login", {
-    //   method: "POST",
-    //   body: JSON.stringify(user),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // console.log(res);
 
-    let {data} = await axios.post(`http://localhost:7500/api/login` , user)
-    console.log(data);
+    let { data } = await axios.post(`http://localhost:7500/api/login`, user);
 
-    if(data.message === "Logged In successfully"){
-      console.log(data);
-      localStorage.setItem("userToken" , data.token)
-      navigate("/")
-      loggedIn.setIsLoggedIn(true)
-    }else{
+    if (data.message === "Logged in Successfully") {
+      localStorage.setItem("userToken", data.token);
+      props.getLoginUser();
+      /*When the user Logged in successfully call the function getLoginUser();
+      To decode the token and save it in the useState*/
+      navigate("/");
+    } else {
       alert("User Not Found or password and Email is wrong")
     }
   }
@@ -49,8 +49,8 @@ export default function Login({ loggedIn }) {
           <input
             placeholder="Email / Username"
             onChange={getUser}
-            type="email"
-            name="email"
+            type="text"
+            name="userName"
             className="text-center form-control m-2"
           />
           <input

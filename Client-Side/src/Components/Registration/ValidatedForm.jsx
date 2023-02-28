@@ -3,13 +3,14 @@ import Joi from "joi-browser";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegistrationForm from "./RegistrationForm";
-const RegistrationValidation = ({ loggedIn }) => {
+import axios from "axios";
+const RegistrationValidation = () => {
   let [user, setUser] = useState({
     fullName: "",
     userName: "",
     phone: "",
     birthDate: "",
-    location: "",
+    location: "first",
     email: "",
     password: "",
     role: "player",
@@ -18,29 +19,25 @@ const RegistrationValidation = ({ loggedIn }) => {
 
   const navigate = useNavigate();
   let schema = {
-    fullName: Joi.string().min(3).max(15).required(),
+    fullName: Joi.string().min(3).max(20).required(),
     userName: Joi.string().min(5).max(15).required(),
     phone: Joi.string()
       .regex(/^01[0-2,5]{1}[0-9]{8}$/)
       .required(),
-    birthDate: Joi.date().min("2018-01-01").required(),
+    birthDate: Joi.date().required(),
     location: Joi.required(),
     email: Joi.string()
-      .email({ tlds: { allow: ["com", "net", "org"] } })
+      .email({ tlds: { allow: ["com", "net", "org", "eg"] } })
       .required(),
     password: Joi.string().min(6).required(),
     role: Joi.string().required(),
   };
   async function formSubmit(e) {
-    await fetch("http://localhost:7500/api/players/add", {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    loggedIn.setIsLoggedIn(true);
-    navigate("/");
+
+    await axios.post(`http://localhost:7500/api/players/add`, user);
+    console.log(user);
+    // loggedIn.setIsLoggedIn(true);
+    navigate("/login");
   }
 
   let validateForm = (e) => {
@@ -78,7 +75,7 @@ const RegistrationValidation = ({ loggedIn }) => {
       validateProperty={validateProperty}
       validateForm={validateForm}
       setError={setError}
-      loggedIn={loggedIn}
+      // loggedIn={loggedIn}
       user={user}
       setUser={setUser}
       formSubmit={formSubmit}
