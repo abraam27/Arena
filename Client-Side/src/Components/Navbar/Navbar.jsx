@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import style from "./navbar.module.css";
-
+import logo from "../../images/Logo1.jpg";
 export default function Navbar({ loggedInUser , logOut}) {
   return (
     <div >
@@ -9,6 +9,7 @@ export default function Navbar({ loggedInUser , logOut}) {
         <ul className="list-unstyled d-flex">
           <li className="px-2">
             <NavLink to="/">Logo</NavLink>
+            {/* <img src={logo} alt="" className={style.logo} /> */}
           </li>
           <li className="px-2">
             <NavLink to="/home">Home</NavLink>

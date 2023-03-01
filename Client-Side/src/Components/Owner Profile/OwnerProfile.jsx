@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import FieldForm from "./FieldForm";
 import Modal from "./Modal";
+import style from "./OwnerProfile.module.css";
+import { Link } from 'react-router-dom';
+import jwtDecode from "jwt-decode";
 import {
   MDBCol,
   MDBContainer,
@@ -9,14 +12,16 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
 } from "mdb-react-ui-kit";
-import styles from "./OwnerProfile.module.css";
 const OwnerProfile = () => {
   const [formIsVisible, setFormIsVisible] = useState(false);
   function addField() {
     setFormIsVisible(true);
   }
+
+  let OwnerToken = localStorage.getItem("userToken");
+  let ownerData = jwtDecode(OwnerToken);
+
 
   return (
     <div className="container">
@@ -27,22 +32,36 @@ const OwnerProfile = () => {
         </Modal>
       )}
       <section style={{ backgroundColor: "white" }} className="text-center">
-        <MDBRow className="justify-content-between pb-3">
-          <p>please add field !</p>
+        <MDBRow className="justify-content-between pb-3 pt-4">
+          {/* <p>please add field !</p> */}
           <MDBCol sm={3}>
-            <MDBBtn outline rounded color="success">
-              my fields
-            </MDBBtn>
+            
+
+            <Link to="/myFields" className={style.btn}>
+          <input
+              className="btn btn-outline-success"
+              type="submit"
+              value="My fields"
+              />
+              </Link>
+
+              
           </MDBCol>
           <MDBCol sm={3}>
-            <MDBBtn outline color="success">
-              show events
-            </MDBBtn>
+          <input
+              className="btn btn-outline-success"
+              type="submit"
+              value="Show events "
+              
+            />
           </MDBCol>
           <MDBCol sm={3}>
-            <MDBBtn outline color="success" onClick={addField}>
-              Add field
-            </MDBBtn>
+          <input
+              className="btn btn-outline-success"
+              type="submit"
+              value="Add Field "
+              onClick={addField}
+            />
           </MDBCol>
         </MDBRow>
         <MDBContainer className="py-1">
@@ -72,7 +91,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        name from api
+                       {ownerData.fullName}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -83,7 +102,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        email from api
+                      {ownerData.email}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -94,7 +113,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        phone from api
+                      {ownerData.phone}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -106,7 +125,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                        location from api
+                      {ownerData.location}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
