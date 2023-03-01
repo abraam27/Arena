@@ -10,6 +10,7 @@ const PlayerSchema = {
         email:{type:"string", pattern:"^[a-zA-Z0-9]+\@[a-zA-Z0-9]+(.com){1}$"},
         userName:{type:"string",pattern:"^[a-zA-Z0-9]+$"},
         password:{type:"string", minLength:5},
+        image:{type:"string"},
         role:{type:"string"}
     },
     required:["fullName", "phone", "birthDate", "location", "email", "userName", "password"],

@@ -3,7 +3,7 @@ const bcrypt= require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Game = require("../Models/GameModel");
 class PlayerServices{
-    constructor(fullName,phone,birthDate,location,email,userName,password,role){
+    constructor(fullName,phone,birthDate,location,email,userName,password,image,role){
         this.fullName = fullName;
         this.phone = phone;
         this.birthDate = birthDate;
@@ -11,6 +11,7 @@ class PlayerServices{
         this.email = email;
         this.userName = userName;
         this.password = password;
+        this.image = image;
         this.role=role;
     }
     static async LoginUser(userData){
@@ -58,7 +59,7 @@ class PlayerServices{
         return await Player.findById(id);
     }
     async AddPlayer(){
-        var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password});
+        var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role});
         let foundPlayer = await Player.find({userName:newPlayer.userName}).exec();//null
         if(foundPlayer.length==0){
             //Please Login

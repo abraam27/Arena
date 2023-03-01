@@ -27,7 +27,7 @@ var GetPlayerByID = async (req, res)=>{
 };
 var AddNewPlayer = async (req, res)=>{
     var HashedPassword = await bcrypt.hash(req.body.password,10);
-    var newPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword,"player");
+    var newPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword,"image_Name","player");
     var newplayerr = {...newPlayer, password:req.body.password};
     if(PlayerValidate(newplayerr)){
         if(await newPlayer.AddPlayer()){

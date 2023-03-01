@@ -8,8 +8,30 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 7500
 const bodyParser = require("body-parser");
+const path = require("path");
+const multer = require("multer");
+// image variable
+const storage = multer.diskStorage({
+  destination:(req, file, cb)=>{
+    cb(null,path.join(__dirname,"images"))
+  },
+  filename:(req, file, cb)=>{
+    cb(null, new Date().toLocaleDateString().replace(/\//g,"-")+"-"+file.originalname) 
+  }
+})
+const fileFilter = (req, file, cb)=>{
+  if(file.mimetype == "images/jpeg" ||
+    file.mimetype == "images/jpg" || 
+    file.mimetype == "images/png"  ){
+      cb(null,true);
+  }else{
+    cb(null,false);
+  }
+}
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
+app.use("/images",express.static(path.join(__dirname,"images")))
+app.use(multer({storage, fileFilter}).single("image"));
 app.use((req, res, next) => {
     // Attach CORS headers
     // Required when using a detached backend (that runs on a different domain)
@@ -17,7 +39,7 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     next();
-  });
+});
 
 //#region For courses [CRUD] [Creat-Read-Update-Delete]
 const CourseRoutes = require("./Routes/CourseRoutes");
