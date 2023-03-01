@@ -12,7 +12,7 @@ class PlayerServices{
         this.userName = userName;
         this.password = password;
         this.image = image;
-        this.role=role;
+        this.role = role;
     }
     static async LoginUser(userData){
         var foundUser;
