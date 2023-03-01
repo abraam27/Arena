@@ -20,11 +20,11 @@ class PlayerServices{
             foundUser = await Player.findOne({userName:userData.userName}).exec();
             if(foundUser){
                 if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("-- Done -- username is true & password is true");
+                    console.log("-- Done -- Username is true & Password is true");
                     const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"Messi"); 
                     return token;
                 }else{
-                    console.log(" -- Unfortunately -- username is true but password is false");
+                    console.log(" -- Unfortunately -- Username is true but Password is false");
                     return false;
     
                 }
@@ -36,11 +36,11 @@ class PlayerServices{
             foundUser = await Player.findOne({email:userData.email}).exec();
             if(foundUser){
                 if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("-- Done -- email is true & password is true");
+                    console.log("-- Done -- Email is true & Password is true");
                     const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"messi")   
                     return token;
                 }else{
-                    console.log("-- Unfortunately --  email is true but password is false");
+                    console.log("-- Unfortunately --  Email is true but Password is false");
                     return false;
     
                 }

@@ -9,25 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 7500
 const bodyParser = require("body-parser");
 const path = require("path");
-const multer = require("multer");
 // image variable
-// const storage = multer.diskStorage({
-//   destination:(req, file, cb)=>{
-//     cb(null,path.join(__dirname,"images"))
-//   },
-//   filename:(req, file, cb)=>{
-//     cb(null, new Date().toLocaleDateString().replace(/\//g,"-")+"-"+file.originalname) 
-//   }
-// })
-// const fileFilter = (req, file, cb)=>{
-//   if(file.mimetype == "images/jpeg" ||
-//     file.mimetype == "images/jpg" || 
-//     file.mimetype == "images/png"  ){
-//       cb(null,true);
-//   }else{
-//     cb(null,false);
-//   }
-// }
+
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 // app.use("/images",express.static(path.join(__dirname,"images")))
@@ -78,29 +61,3 @@ app.use("/api/login",authRoutes);
 
 app.listen(PORT, ()=>{console.log("http://localhost:"+PORT)})
 
-
-//#region player service
-
-// async UpdatePlayer(id){
-//     if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
-//         return true;
-//     }else{
-//         return false;
-//     }
-// } 
-
-//#region playercontroller
-
-// var UpdatePlayer = async (req, res)=>{
-//     var HashedPassword = await bcrypt.hash(req.body.password,10);
-//     var updatedPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword);
-//     if(PlayerValidate(updatedPlayer)){
-//         if(updatedPlayer.UpdatePlayer(req.params.id)){
-//             res.status(200).send("Updated Successfully !");
-//         }else{
-//             res.status(400).send("Not Updated !");
-//         }
-//     }else{
-//         res.status(400).send("Validation Not Added !");
-//     }
-// };
