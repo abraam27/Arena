@@ -6,9 +6,13 @@ import Registration from "../Components/Registration/Registration";
 import Login from "../Components/Login/Login";
 import Navbar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
+import MyFields from "../Components/Owner Profile/MyFields";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import OwnerProfile from "../Components/Owner Profile/OwnerProfile";
+import DiscoverCourts from "../Components/Discover-Courts/DiscoverCourts";
+import CourtDetails from './../Components/courtDetails/CourtDetails';
+
 
 function App() {
   let [loggedInUser, setloggedInUser] = useState(null);
@@ -53,6 +57,11 @@ function App() {
             
             </>
           }
+          <Route path="/discover" element={<DiscoverCourts />} />
+          <Route path="/courtDetails" element={<CourtDetails />} />
+          <Route path="/myFields" element={<MyFields />} />
+          
+          
 
 
         </Routes>

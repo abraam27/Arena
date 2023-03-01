@@ -28,8 +28,9 @@ export default function Login(props) {
     e.preventDefault();
 
     let { data } = await axios.post(`http://localhost:7500/api/login`, user);
+    console.log(user);
 
-    if (data.message === "Logged in Successfully") {
+    if (data.message === "Logged In Successfully") {
       localStorage.setItem("userToken", data.token);
       props.getLoginUser();
       /*When the user Logged in successfully call the function getLoginUser();
