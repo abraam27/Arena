@@ -8,8 +8,6 @@ var FieldSchema = {
     fieldOwnerId:{type:String,pattern:"^[a-zA-Z0-9]+$", required:true},
     valid:{type:String,pattern:"^[0-1]+$", required:true}
 
-
-
 }
 var Field = DB_Connection.model("Fields",FieldSchema);
 module.exports = Field;

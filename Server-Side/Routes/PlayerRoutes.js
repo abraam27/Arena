@@ -4,6 +4,7 @@ const PlayerController = require("../Controllers/PlayerController");
 const GameController = require("../Controllers/GameController");
 const FieldController = require("../Controllers/FieldController");
 
+
 // get all Players
 router.delete("/delete/:id",PlayerController.DeletePlayer);
 router.get("/",PlayerController.GetAllPlayers)
@@ -15,16 +16,11 @@ router.post("/add",PlayerController.AddNewPlayer);
 router.put("/update",PlayerController.UpdatePlayer);
 // delete Player by id
 router.delete("/delete/:id",PlayerController.DeletePlayer);
-// login Player
-router.post("/login",PlayerController.PlayerLogin);
 // get the uaser his all reservations
+router.get("/games/:id",PlayerController.GetAllGamesByPlayerID)
 router.get("/games/:id",PlayerController.GetAllGames)
 // get specific reservation by Id
 router.get("/games/:id/:gameId",PlayerController.GetGame)
-// create game
-router.get("/games/create",GameController.AddNewGame)
-// delete game
-router.get("/games/:id",GameController.DeleteGame)
 // get all valid games
 router.get("/fields/valid",FieldController.GetAllValid)
 

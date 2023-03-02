@@ -13,7 +13,7 @@ var PlayerSchema = {
     userName:{type:String,pattern:"^[a-zA-Z0-9]+$", required:true},
     password:{type:String,minlength:5, required:true},
     image:{type:String},
-    role:{type:String}
+    role:{type:String,required:true}
 }
-var Player = DB_Connection.model("players",PlayerSchema);
+var Player = DB_Connection.model("Players",PlayerSchema);
 module.exports = Player;

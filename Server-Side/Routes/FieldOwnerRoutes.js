@@ -13,8 +13,7 @@ router.post("/add",FieldOwnerController.AddNewFieldOwner);
 router.put("/update",FieldOwnerController.UpdateFieldOwner);
 // delete FieldOwner by id
 router.delete("/delete/:id",FieldOwnerController.DeleteFieldOwner);
-// login Player
-router.post("/login",FieldOwnerController.FieldOwnerLogin);
+
 
 //#region of FieldOwner CRUD operations with Fields
 // FieldOwner get all fields

@@ -13,7 +13,7 @@ const PlayerSchema = {
         image:{type:"string"},
         role:{type:"string"}
     },
-    required:["fullName", "phone", "birthDate", "location", "email", "userName", "password"],
+    required:["fullName", "phone", "birthDate", "location", "email", "userName", "password","role"],
     additionalProperties:false
 }
 const PlayerValidate = ajv.compile(PlayerSchema);

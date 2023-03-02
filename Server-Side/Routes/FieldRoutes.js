@@ -8,7 +8,7 @@ router.get("/:id",FieldController.GetFieldByID);
 // add new Field
 router.post("/add",FieldController.AddNewField);
 // update Field by id
-router.put("/update/:id",FieldController.UpdateField);
+router.put("/update",FieldController.UpdateField);
 // delete Field by id
 router.delete("/delete/:id",FieldController.DeleteField);
 module.exports = router;

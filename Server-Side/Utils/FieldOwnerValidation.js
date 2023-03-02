@@ -6,9 +6,10 @@ const FieldOwnerSchema = {
         fullName:{type:"string",pattern:"^[a-zA-Z\s\.]*$"},
         phone:{type:"string",pattern:"^01[0125][0-9]{8}$"},
         userName:{type:"string",pattern:"^[a-zA-Z0-9]+$"},
-        password:{type:"string", minLength:5}
+        password:{type:"string", minLength:5},
+        role:{type:"string"}
     },
-    required:["fullName", "phone", "userName", "password"],
+    required:["fullName", "phone", "userName", "password","role"],
     additionalProperties:false
 }
 const FieldOwnerValidate = ajv.compile(FieldOwnerSchema);
