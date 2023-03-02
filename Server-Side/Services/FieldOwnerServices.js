@@ -1,10 +1,11 @@
 const FieldOwner = require("../Models/FieldOwnerModel");
 class FieldOwnerServices{
-    constructor(fullName,phone,userName,password){
+    constructor(fullName,phone,userName,password,role){
         this.fullName = fullName;
         this.phone = phone;
         this.userName = userName;
         this.password = password;
+        this.role = role;
     }
     static async LoginFieldOwner(fieldOwnerData){
         var foundUser;
@@ -35,7 +36,7 @@ class FieldOwnerServices{
         return await FieldOwner.findById(id);;
     }
     async AddFieldOwner(){
-        var newFieldOwner = new FieldOwner({ fullName: this.fullName, phone: this.phone, userName: this.userName, password: this.password});
+        var newFieldOwner = new FieldOwner({ fullName: this.fullName, phone: this.phone, userName: this.userName, password: this.password, role:this.role});
         let foundFieldOwner = await FieldOwner.find({userName:newFieldOwner.userName}).exec();//null
         if(foundFieldOwner.length==0){
             //Please Login
@@ -47,7 +48,7 @@ class FieldOwnerServices{
         }
     }
     async UpdateFieldOwner(id){
-        if(await FieldOwner.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+        if(await FieldOwner.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, role: this.role})){
             return true;
         }else{
             return false;

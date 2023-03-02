@@ -5,6 +5,7 @@ const PlayerController = require("../Controllers/PlayerController");
 const FieldController = require("../Controllers/FieldController");
 const FieldOwnerController = require("../Controllers/FieldOwnerController");
 const GameController = require("../Controllers/GameController");
+const LoginController = require("../Controllers/LoginController");
 
 //#region of player
 // get all Players
@@ -13,8 +14,6 @@ router.get("/player/",PlayerController.GetAllPlayers)
 router.get("/player/:id",PlayerController.GetPlayerByID);
 // delete Player by id
 router.delete("/player/delete/:id",PlayerController.DeletePlayer);
-// login User
-router.get("/login",PlayerController.PlayerLogin);
 //#endregion of player
 
 //#region of fields
@@ -42,8 +41,6 @@ router.delete("/fieldOwners/delete/:id",FieldOwnerController.DeleteFieldOwner);
 router.get("/",GameController.GetAllGames)
 // get Game by id
 router.get("/:id",GameController.GetGameByID);
-// delete Game by id
-router.delete("/delete/:id",GameController.DeleteGame);
 //#endregion of game
 
 module.exports = router;

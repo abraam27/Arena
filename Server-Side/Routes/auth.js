@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const PlayerController = require("../Controllers/PlayerController");
+const LoginController = require("../Controllers/LoginController");
 
 // login User
-router.post("/",PlayerController.PlayerLogin);
-module.exports = router;
+router.post("/",LoginController.UserLogin);
+module.exports = router
