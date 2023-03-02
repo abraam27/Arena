@@ -18,10 +18,6 @@ router.put("/update",PlayerController.UpdatePlayer);
 router.delete("/delete/:id",PlayerController.DeletePlayer);
 // get the uaser his all reservations
 router.get("/games/:id",PlayerController.GetAllGamesByPlayerID)
-router.get("/games/:id",PlayerController.GetAllGames)
-// get specific reservation by Id
-router.get("/games/:id/:gameId",PlayerController.GetGame)
-// get all valid games
-router.get("/fields/valid",FieldController.GetAllValid)
+
 
 module.exports = router;

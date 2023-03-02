@@ -37,7 +37,7 @@ function myMulter(customPath , customValidator) {
             cb( null , fullPath);
         },
         filename: function( req , file , cb){
-            cb(null , nanoid()+ "_" + file.originalname )
+            cb(null , Date().now+ "_" + file.originalname )
         }
     })
 

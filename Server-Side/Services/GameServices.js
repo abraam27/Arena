@@ -18,7 +18,6 @@ class GameServices{
     }
     async AddGame(){
         var newGame = new Game ({playerId:this.playerId,fieldId:this.fieldId,date:this.date,hour:this.hour,rate:this.rate,complain:this.complain,comment:this.comment });
-        // let foundUser = await Field.find({fieldName:newField.fieldName}).exec();//null
         await newGame.save();
         return true;
     }
@@ -49,9 +48,6 @@ class GameServices{
     }
     static async GetAllGamesByFieldID(id){
         return await Game.find({fieldId:id});;
-    }
-    async UpdateFieldRateByFieldID(id){
-        
     }
 }
 module.exports = GameServices;

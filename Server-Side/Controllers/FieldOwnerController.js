@@ -11,7 +11,7 @@ var GetFieldOwnerByID = async (req, res)=>{
 };
 var AddNewFieldOwner = async (req, res)=>{
     var HashedPassword = await bcrypt.hash(req.body.password,10);
-    var newFieldOwner = new FieldOwnerServices(req.body.fullName, req.body.phone, req.body.userName, HashedPassword, "FieldOwner");
+    var newFieldOwner = new FieldOwnerServices(req.body.fullName, req.body.phone, req.body.email, req.body.userName, HashedPassword, "FieldOwner");
     var newFieldOwnerr = {...newFieldOwner, password:req.body.password};
     if(FieldOwnerValidate(newFieldOwnerr)){
         if(await newFieldOwner.AddFieldOwner()){
@@ -26,7 +26,7 @@ var AddNewFieldOwner = async (req, res)=>{
 };
 var UpdateFieldOwner = async (req, res)=>{
     var HashedPassword = await bcrypt.hash(req.body.password,10);
-    var updatedFieldOwner = new FieldOwnerServices(req.body.fullName, req.body.phone, req.body.userName, HashedPassword, req.body.role);
+    var updatedFieldOwner = new FieldOwnerServices(req.body.fullName, req.body.phone,req.body.email, req.body.userName, HashedPassword, req.body.role);
     if(FieldOwnerValidate(updatedFieldOwner)){
         if(updatedFieldOwner.UpdateFieldOwner(req.body._id)){
             res.status(201).send("Updated Successfully !");

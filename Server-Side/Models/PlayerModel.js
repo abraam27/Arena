@@ -8,8 +8,7 @@ var PlayerSchema = {
     location:{type:String,pattern:"^[a-zA-Z\s]*$"},
     email:{
         type:String,pattern:"^[a-zA-Z0-9]+\@[a-zA-Z0-9]+(.com)|(.eg)|(.net)|(.org){1}$"
-        },
-    
+    },
     userName:{type:String,pattern:"^[a-zA-Z0-9]+$", required:true},
     password:{type:String,minlength:5, required:true},
     image:{type:String},

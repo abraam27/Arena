@@ -3,20 +3,6 @@ const AuthValidation = require("../Utils/AuthValidation");
 const PlayerServices = require("../Services/PlayerServices");
 const bcrypt= require("bcrypt");
 
-var PlayerLogin = async (req, res)=>{
-    var userData = req.body;
-    if(AuthValidation(userData)){
-        const token = await PlayerServices.LoginUser(userData)
-        if(token){
-            res.header("X-Auth-Token", token)
-            res.status(200).send({message: "Logged In Successfully" , token : token});
-        }else{
-            res.status(400).send("Not Logged in");
-        }
-    }else{
-        res.status(400).send("Not Valid !");
-    }
-}
 var GetAllPlayers = async (req, res)=>{
     res.status(200).json(await PlayerServices.GetAllPlayers());
 };
@@ -29,8 +15,8 @@ var AddNewPlayer = async (req, res)=>{
     // res.json({body:req.body,file:req.file});
     var HashedPassword = await bcrypt.hash(req.body.password,10);
     var newPlayer = new PlayerServices(req.body.fullName, req.body.phone, req.body.birthDate, req.body.location, req.body.email, req.body.userName, HashedPassword,"Player_Image","Player");
-    var newplayerr = {...newPlayer, password:req.body.password};
-    if(PlayerValidate(newplayerr)){
+    var newPlayerr = {...newPlayer, password:req.body.password};
+    if(PlayerValidate(newPlayerr)){
         if(await newPlayer.AddPlayer()){
             res.status(201).send("Add Successfully !");
         }else{
@@ -69,9 +55,6 @@ var GetAllGamesByPlayerID = async (req, res)=>{
         res.status(400).send("there is no games !");
     }
 };
-
-
-
 module.exports = {
     GetAllPlayers,
     GetPlayerByID,
