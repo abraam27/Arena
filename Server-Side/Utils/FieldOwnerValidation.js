@@ -3,7 +3,7 @@ var ajv = new Ajv();
 const FieldOwnerSchema = {
     type:"object",
     properties:{
-        fullName:{type:"string",pattern:"^[a-zA-Z\s]*$"},
+        fullName:{type:"string",pattern:"^[a-zA-Z\s\.]*$"},
         phone:{type:"string",pattern:"^01[0125][0-9]{8}$"},
         userName:{type:"string",pattern:"^[a-zA-Z0-9]+$"},
         password:{type:"string", minLength:5},

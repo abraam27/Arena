@@ -17,14 +17,17 @@ router.delete("/player/delete/:id",PlayerController.DeletePlayer);
 //#endregion of player
 
 //#region of fields
+// get the not valid games
+router.get("/fields/n",FieldController.GetNotValid)
 // get all Fields
-router.get("/fields/",FieldController.GetAllFields)
+router.get("/fields",FieldController.GetAllFields)
 // get Field by id
 router.get("/fields/:id",FieldController.GetFieldByID);
 // update field
-router.put("/fields/update/:id",FieldController.UpdateField);
+router.put("/fields/update",FieldController.UpdateField);
 // delete Field by id
 router.delete("/fields/delete/:id",FieldController.DeleteField);
+
 //#endregion of fields
 
 //#region of fieldOwner

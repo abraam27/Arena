@@ -54,6 +54,12 @@ class FieldServices{
     static async GetAllFieldsByFieldOwnerID(id){
         return await Field.find({fieldOwnerId:id});
     }
-    
+
+    static async GetAllValid(){
+        return await Field.find({valid:1})
+    }
+    static async GetNotValid(){
+        return await Field.find({valid:0})
+    }
 }
 module.exports = FieldServices;

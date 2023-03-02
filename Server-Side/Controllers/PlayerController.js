@@ -9,7 +9,7 @@ var PlayerLogin = async (req, res)=>{
         const token = await PlayerServices.LoginUser(userData)
         if(token){
             res.header("X-Auth-Token", token)
-            res.status(200).send("Logged in successfully");
+            res.status(200).send({message: "Logged In Successfully" , token : token});
         }else{
             res.status(400).send("Not Logged in");
         }
