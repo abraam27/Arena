@@ -6,11 +6,11 @@ var GetAllFields = async (req, res)=>{
 var GetFieldByID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetFieldByID(req.params.id));
 };
-var GetAllValid = async (req, res)=>{
-    res.status(200).json(await FieldServices.GetAllValid());
+var GetAllValidFields = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetAllValidFields());
 };
-var GetNotValid = async (req, res)=>{
-    res.status(200).json(await FieldServices.GetNotValid());
+var GetNotValidFields = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetNotValidFields());
 };
 var AddNewField = async(req, res)=>{
     var newField = new FieldServices(req.body.fieldName,req.body.location,req.body.price,"3",req.body.fieldOwnerId,"0");
@@ -48,9 +48,6 @@ var DeleteField = async (req, res)=>{
 var GetAllFieldsByFieldOwnerID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetAllFieldsByFieldOwnerID(req.params.id));
 };
-var GetAllFieldsByFieldOwnerID = async (req, res)=>{
-    res.status(200).json(await FieldServices.GetAllFieldsByFieldOwnerID(req.params.id));
-};
 
 module.exports = {
     GetAllFields,
@@ -59,6 +56,6 @@ module.exports = {
     UpdateField,
     DeleteField,
     GetAllFieldsByFieldOwnerID,
-    GetAllValid,
-    GetNotValid
+    GetAllValidFields,
+    GetNotValidFields
 };

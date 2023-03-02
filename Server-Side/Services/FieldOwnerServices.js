@@ -3,31 +3,10 @@ class FieldOwnerServices{
     constructor(fullName,phone,userName,password,role){
         this.fullName = fullName;
         this.phone = phone;
+        this.email = email;
         this.userName = userName;
         this.password = password;
         this.role = role;
-    }
-    static async LoginFieldOwner(fieldOwnerData){
-        var foundUser;
-        if(fieldOwnerData.userName){
-            foundUser = await FieldOwner.findOne({userName:fieldOwnerData.userName}).exec();
-            if(foundUser){
-                if(await bcrypt.compare(fieldOwnerData.password, foundUser.password)){
-                    console.log("username true and password true");
-                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, userName:foundUser.userName},"messi")   
-                    return token;
-                }else{
-                    console.log("username true but password false");
-                    return false;
-    
-                }
-            }else{
-                console.log("username false");
-                return false;
-            }
-        }else{
-            return false;
-        }
     }
     static async GetAllFieldOwners(){
         return await FieldOwner.find({});
@@ -36,10 +15,9 @@ class FieldOwnerServices{
         return await FieldOwner.findById(id);;
     }
     async AddFieldOwner(){
-        var newFieldOwner = new FieldOwner({ fullName: this.fullName, phone: this.phone, userName: this.userName, password: this.password, role:this.role});
-        let foundFieldOwner = await FieldOwner.find({userName:newFieldOwner.userName}).exec();//null
+        var newFieldOwner = new FieldOwner({ fullName: this.fullName, phone: this.phone,email: this.email, userName: this.userName, password: this.password, role:this.role});
+        let foundFieldOwner = await FieldOwner.find({$or:[{userName:newFieldOwner.userName},{email:newFieldOwner.email}]}).exec();//null
         if(foundFieldOwner.length==0){
-            //Please Login
             await newFieldOwner.save();
             return true;
         }else{
@@ -48,7 +26,7 @@ class FieldOwnerServices{
         }
     }
     async UpdateFieldOwner(id){
-        if(await FieldOwner.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, role: this.role})){
+        if(await FieldOwner.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone,email: this.email, userName: this.userName, password: this.password, role: this.role})){
             return true;
         }else{
             return false;

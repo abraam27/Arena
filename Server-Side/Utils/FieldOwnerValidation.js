@@ -5,6 +5,7 @@ const FieldOwnerSchema = {
     properties:{
         fullName:{type:"string",pattern:"^[a-zA-Z\s\.]*$"},
         phone:{type:"string",pattern:"^01[0125][0-9]{8}$"},
+        email:{type:"string", pattern:"^[a-zA-Z0-9]+\@[a-zA-Z0-9]+(.com)|(.eg)|(.net)|(.org){1}$"},
         userName:{type:"string",pattern:"^[a-zA-Z0-9]+$"},
         password:{type:"string", minLength:5},
         role:{type:"string"}

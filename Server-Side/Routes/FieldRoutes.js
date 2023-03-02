@@ -11,4 +11,8 @@ router.post("/add",FieldController.AddNewField);
 router.put("/update",FieldController.UpdateField);
 // delete Field by id
 router.delete("/delete/:id",FieldController.DeleteField);
+// get all vaild fields
+router.get("/valid",FieldController.GetAllValidFields);
+// get all invaild fields
+router.get("/invalid",FieldController.GetNotValidFields);
 module.exports = router;

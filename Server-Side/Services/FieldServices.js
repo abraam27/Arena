@@ -35,8 +35,6 @@ class FieldServices{
     }
     async AddField(){
         var newField = new Field({ fieldName: this.fieldName, location: this.location, price: this.price, rate: this.rate, fieldOwnerId: this.fieldOwnerId,valid:this.valid});
-        // let foundUser = await Field.find({fieldName:newField.fieldName}).exec();//null
-        
             await newField.save();
             return true;
         
@@ -55,10 +53,10 @@ class FieldServices{
         return await Field.find({fieldOwnerId:id});
     }
 
-    static async GetAllValid(){
+    static async GetAllValidFields(){
         return await Field.find({valid:1})
     }
-    static async GetNotValid(){
+    static async GetNotValidFields(){
         return await Field.find({valid:0})
     }
 }

@@ -22,9 +22,8 @@ class PlayerServices{
     }
     async AddPlayer(){
         var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role});
-        let foundPlayer = await Player.find({userName:newPlayer.userName}).exec();//null
+        let foundPlayer = await Player.find({$or:[{userName:newPlayer.userName},{email:newPlayer.email}]}).exec();//null
         if(foundPlayer.length==0){
-            //Please Login
             await newPlayer.save();
             return true;
         }else{
@@ -33,7 +32,7 @@ class PlayerServices{
         }
     }
     async UpdatePlayer(id){
-        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role})){
             return true;
         }else{
             return false;

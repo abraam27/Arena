@@ -51,7 +51,7 @@ app.use("/api/games",gameRoutes);
 
 //#region For admins [CRUD] [Creat-Read-Update-Delete]
 const adminRoutes = require("./Routes/AdminRoutes");
-app.use("/api/admins",adminRoutes);
+app.use("/api/admin",adminRoutes);
 //#endregion
 
 //#region For admins [CRUD] [Creat-Read-Update-Delete]

@@ -14,16 +14,31 @@ class LoginService{
                 console.log(foundUser);
                 console.log(userData);
                 if(foundUser){
-                    if(await bcrypt.compare(userData.password, foundUser.password)){
+                    if(bcrypt.compare(userData.password, foundUser.password)){
                         console.log("-- Done -- username is true & password is true");
-                        if(Models[i] == "Player"){
-                            token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"Messi"); 
+                        if(Models[i] == Player){
+                            token = jwt.sign({userID:foundUser._id, 
+                                fullName:foundUser.fullName, 
+                                phone:foundUser.phone, 
+                                birthDate:foundUser.birthDate, 
+                                location:foundUser.location, 
+                                email:foundUser.email, 
+                                userName:foundUser.userName},
+                                "Arena"); 
                             return token;
-                        }else if(Models[i] == "FieldOwner"){
-                            token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, email:foundUser.email, userName:foundUser.userName},"Messi"); 
+                        }else if(Models[i] == FieldOwner){
+                            token = jwt.sign({userID:foundUser._id, 
+                                fullName:foundUser.fullName, 
+                                phone:foundUser.phone, 
+                                email:foundUser.email, 
+                                userName:foundUser.userName},
+                                "Arena"); 
                             return token;
                         }else{
-                            token = jwt.sign({userID:foundUser._id, userName:foundUser.userName, role:foundUser.role},"Messi")
+                            token = jwt.sign({userID:foundUser._id, 
+                                userName:foundUser.userName, 
+                                role:foundUser.role},
+                                "Arena")
                             return token;
                         }
                     }else{
@@ -38,16 +53,31 @@ class LoginService{
                 console.log(foundUser);
                 console.log(userData);
                 if(foundUser){
-                    if(await bcrypt.compare(userData.password, foundUser.password)){
+                    if(bcrypt.compare(userData.password, foundUser.password)){
                         console.log("-- Done -- email is true & password is true");
-                        if(Models[i] == "Player"){
-                            token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"Messi"); 
+                        if(Models[i] == Player){
+                            token = jwt.sign({userID:foundUser._id, 
+                                fullName:foundUser.fullName, 
+                                phone:foundUser.phone, 
+                                birthDate:foundUser.birthDate, 
+                                location:foundUser.location, 
+                                email:foundUser.email, 
+                                userName:foundUser.userName},
+                                "Arena"); 
                             return token;
-                        }else if(Models[i] == "FieldOwner"){
-                            token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, email:foundUser.email, userName:foundUser.userName},"Messi"); 
+                        }else if(Models[i] == FieldOwner){
+                            token = jwt.sign({userID:foundUser._id, 
+                                fullName:foundUser.fullName, 
+                                phone:foundUser.phone, 
+                                email:foundUser.email, 
+                                userName:foundUser.userName},
+                                "Arena"); 
                             return token;
                         }else{
-                            token = jwt.sign({userID:foundUser._id, userName:foundUser.userName, role:foundUser.role},"Messi")
+                            token = jwt.sign({userID:foundUser._id, 
+                                userName:foundUser.userName, 
+                                role:foundUser.role},
+                                "Arena")
                             return token;
                         }                        
                     }else{
