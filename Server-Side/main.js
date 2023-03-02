@@ -14,7 +14,7 @@ const path = require("path");
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 // app.use("/images",express.static(path.join(__dirname,"images")))
-app.use(multer().single("image"));
+// app.use(multer().single("image"));
 app.use((req, res, next) => {
     // Attach CORS headers
     // Required when using a detached backend (that runs on a different domain)
