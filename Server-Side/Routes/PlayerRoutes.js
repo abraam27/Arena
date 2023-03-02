@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const PlayerController = require("../Controllers/PlayerController");
 const GameController = require("../Controllers/GameController");
+const FieldController = require("../Controllers/FieldController");
 
 // get all Players
+router.delete("/delete/:id",PlayerController.DeletePlayer);
 router.get("/",PlayerController.GetAllPlayers)
 // get Player by id
 router.get("/:id",PlayerController.GetPlayerByID);
@@ -23,4 +25,7 @@ router.get("/games/:id/:gameId",PlayerController.GetGame)
 router.get("/games/create",GameController.AddNewGame)
 // delete game
 router.get("/games/:id",GameController.DeleteGame)
+// get all valid games
+router.get("/fields/valid",FieldController.GetAllValid)
+
 module.exports = router;
