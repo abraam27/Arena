@@ -59,5 +59,8 @@ class FieldServices{
     static async GetNotValidFields(){
         return await Field.find({valid:0})
     }
+    static async GetFieldsByLocation(location){
+        return await Field.find({location: { $regex: '.*' + location + '.*' },valid:1})
+    }
 }
 module.exports = FieldServices;

@@ -15,4 +15,6 @@ router.delete("/delete/:id",FieldController.DeleteField);
 router.get("/valid",FieldController.GetAllValidFields);
 // get all invaild fields
 router.get("/invalid",FieldController.GetNotValidFields);
+// get all invaild fields
+router.get("/location/:location",FieldController.GetFieldsByLocation);
 module.exports = router;

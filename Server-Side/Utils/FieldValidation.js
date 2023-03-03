@@ -10,7 +10,7 @@ const FieldSchema = {
         fieldOwnerId:{type:"string"},
         valid:{type:"string",pattern:"^[0-1]+$"}
     },
-    required:["fieldName","location","price","fieldOwnerId","valid"],
+    required:["fieldName","location","price","fieldOwnerId"],
     additionalProperties:false
 }
 const FieldValidate = ajv.compile(FieldSchema);

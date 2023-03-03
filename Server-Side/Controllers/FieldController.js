@@ -48,7 +48,9 @@ var DeleteField = async (req, res)=>{
 var GetAllFieldsByFieldOwnerID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetAllFieldsByFieldOwnerID(req.params.id));
 };
-
+var GetFieldsByLocation = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetFieldsByLocation(req.params.location));
+};
 module.exports = {
     GetAllFields,
     GetFieldByID,
@@ -57,5 +59,6 @@ module.exports = {
     DeleteField,
     GetAllFieldsByFieldOwnerID,
     GetAllValidFields,
-    GetNotValidFields
+    GetNotValidFields,
+    GetFieldsByLocation
 };
