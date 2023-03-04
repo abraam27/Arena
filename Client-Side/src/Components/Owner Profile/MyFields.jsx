@@ -1,4 +1,5 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 import {
     MDBContainer,
@@ -12,11 +13,15 @@ import {
 export default function MyFields(){
 let [fieldData,setFieldData]= useState([])
    
-
+let OwnerToken = localStorage.getItem("userToken");
+let ownerData = jwtDecode(OwnerToken);
+console.log(ownerData.userID);
 useEffect(()=>{
     async function getFieldsData(){
 
-        let {data}= await axios.get(`http://localhost:7500/api/fields`);
+        let { data } = await axios.get(
+          `http://localhost:7500/api/fieldOwners/fields/${ownerData.userID}`
+        );
         setFieldData(data)
         // console.log(fieldData);
       }
@@ -30,9 +35,9 @@ console.log(fieldData)
       <MDBRow className="justify-content-center mb-0">
         <MDBCol md="12" xl="10">
             {fieldData.map((f , index)=>
-            <div className="container">
+            <div className="container" key={index}>
 
-                <MDBCard className="shadow-0 border rounded-3 mt-5 mb-3 row" key={index}>
+                <MDBCard className="shadow-0 border rounded-3 mt-5 mb-3 row" >
                 <MDBCardBody>
                   <MDBRow>
                     <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">

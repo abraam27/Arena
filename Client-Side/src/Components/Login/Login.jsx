@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
-export default function Login(props) {
+import { useDispatch } from "react-redux";
+import jwtDecode from "jwt-decode";
+export default function Login() {
   let [user, setUser] = useState({
     userName: "",
-    password: ""
+    password: "",
   });
-
+  const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   function getUser(e) {
     if (e.target.value.includes("@")) {
       setUser({ email: "", password: "" });
@@ -27,17 +29,23 @@ export default function Login(props) {
   async function formSubmit(e) {
     e.preventDefault();
 
-    let { data } = await axios.post(`http://localhost:7500/api/login`, user);
-    console.log(user);
+    let { data, error, body } = await axios
+      .post(`http://localhost:7500/api/login`, user)
+      .catch((err) => {
+        setShowError(true);
+      });
+    console.log(body);
 
     if (data.message === "Logged In Successfully") {
       localStorage.setItem("userToken", data.token);
-      props.getLoginUser();
+      let encodedToken = localStorage.getItem("userToken"); //Get the localStorage item by key
+      let userData = jwtDecode(encodedToken);
+      dispatch({ type: "setLoggedInUser", payload: userData });
       /*When the user Logged in successfully call the function getLoginUser();
       To decode the token and save it in the useState*/
       navigate("/");
     } else {
-      alert("User Not Found or password and Email is wrong")
+      alert("User Not Found or password and Email is wrong");
     }
   }
 
@@ -61,8 +69,13 @@ export default function Login(props) {
             name="password"
             className="text-center form-control m-2"
           />
+          {showError &&<div className="text-center text-danger pt-3">
+            <b>Wrong email/username or password, please try again!</b>
+          </div>}
           <div className="d-flex justify-content-center m-5">
-            <button className='btn btn-outline-success col-lg-3 col-6'>LogIn</button>
+            <button className="btn btn-outline-success col-lg-3 col-6">
+              Login
+            </button>
           </div>
         </form>
       </div>
