@@ -9,14 +9,13 @@ const RegistrationValidation = () => {
     fullName: "",
     userName: "",
     phone: "",
-    birthDate: "",
-    location: "first",
+
     email: "",
     password: "",
-    role: "player",
+    // role: "fieldOwner",
   });
   let [error, setError] = useState({});
-let [fieldIsEmpty,setFieldIsEmpty]=useState(false)
+  let [fieldIsEmpty, setFieldIsEmpty] = useState(false);
   const navigate = useNavigate();
   let schema = {
     fullName: Joi.string().min(3).max(20).required(),
@@ -24,22 +23,18 @@ let [fieldIsEmpty,setFieldIsEmpty]=useState(false)
     phone: Joi.string()
       .regex(/^01[0-2,5]{1}[0-9]{8}$/)
       .required(),
-    birthDate: Joi.date().required(),
-    location: Joi.required(),
+
     email: Joi.string()
       .email({ tlds: { allow: ["com", "net", "org", "eg"] } })
       .required(),
     password: Joi.string().min(6).required(),
-    role: Joi.string().required(),
   };
   async function formSubmit(e) {
-
-    await axios.post(`http://localhost:7500/api/players/add`, user);
+    await axios.post(`http://localhost:7500/api/fieldOwners/add`, user);
     console.log(user);
     // loggedIn.setIsLoggedIn(true);
     navigate("/login");
   }
-  
 
   let validateForm = (e) => {
     e.preventDefault();
@@ -48,12 +43,13 @@ let [fieldIsEmpty,setFieldIsEmpty]=useState(false)
     if (!error) {
       formSubmit();
     } else {
-      setFieldIsEmpty(true)
+      setFieldIsEmpty(true);
       const errorData = {};
       for (let users of error.details) {
         const name = users.path[0];
         const message = users.message;
         errorData[name] = message;
+        // console.log(errorData)
       }
 
       setError(errorData);
@@ -71,7 +67,6 @@ let [fieldIsEmpty,setFieldIsEmpty]=useState(false)
     return error ? error.details[0].message : null;
   };
   return (
-    
     <RegistrationForm
       error={error}
       validateProperty={validateProperty}
