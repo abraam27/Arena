@@ -8,7 +8,13 @@ router.get("/:id",FieldController.GetFieldByID);
 // add new Field
 router.post("/add",FieldController.AddNewField);
 // update Field by id
-router.put("/update/:id",FieldController.UpdateField);
+router.put("/update",FieldController.UpdateField);
 // delete Field by id
 router.delete("/delete/:id",FieldController.DeleteField);
+// get all vaild fields
+router.get("/valid",FieldController.GetAllValidFields);
+// get all invaild fields
+router.get("/invalid",FieldController.GetNotValidFields);
+// get all invaild fields
+router.get("/location/:location",FieldController.GetFieldsByLocation);
 module.exports = router;

@@ -14,7 +14,7 @@ const path = require("path");
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 // app.use("/images",express.static(path.join(__dirname,"images")))
-app.use(multer().single("image"));
+// app.use(multer().single("image"));
 app.use((req, res, next) => {
     // Attach CORS headers
     // Required when using a detached backend (that runs on a different domain)
@@ -51,12 +51,12 @@ app.use("/api/games",gameRoutes);
 
 //#region For admins [CRUD] [Creat-Read-Update-Delete]
 const adminRoutes = require("./Routes/AdminRoutes");
-app.use("/api/admins",adminRoutes);
+app.use("/api/admin",adminRoutes);
 //#endregion
 
 //#region For admins [CRUD] [Creat-Read-Update-Delete]
-const authRoutes = require("./Routes/auth");
-app.use("/api/login",authRoutes);
+const AuthRoute = require("./Routes/AuthRoute");
+app.use("/api/login",AuthRoute);
 //#endregion
 
 app.listen(PORT, ()=>{console.log("http://localhost:"+PORT)})

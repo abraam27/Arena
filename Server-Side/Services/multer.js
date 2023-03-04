@@ -1,7 +1,6 @@
 const multer = require('multer');
 const fs = require('fs')
 const path = require('path')
-const {nanoid} = require('nanoid')
 
 const multerPath = {
 
@@ -38,7 +37,7 @@ function myMulter(customPath , customValidator) {
             cb( null , fullPath);
         },
         filename: function( req , file , cb){
-            cb(null , nanoid()+ "_" + file.originalname )
+            cb(null , Date().now+ "_" + file.originalname )
         }
     })
 

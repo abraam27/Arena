@@ -6,6 +6,12 @@ var GetAllFields = async (req, res)=>{
 var GetFieldByID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetFieldByID(req.params.id));
 };
+var GetAllValidFields = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetAllValidFields());
+};
+var GetNotValidFields = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetNotValidFields());
+};
 var AddNewField = async(req, res)=>{
     var newField = new FieldServices(req.body.fieldName,req.body.location,req.body.price,"3",req.body.fieldOwnerId,"0");
     console.log(newField);
@@ -21,6 +27,7 @@ var AddNewField = async(req, res)=>{
 };
 var UpdateField = (req, res)=>{
     var updatedField = new FieldServices(req.body.fieldName,req.body.location,req.body.price,req.body.rate,req.body.fieldOwnerId,req.body.valid);
+    console.log(updatedField);
     if(FieldValidate(updatedField)){
         if(updatedField.UpdateField(req.body._id)){
             res.status(201).send("Updated Successfully !");
@@ -41,11 +48,17 @@ var DeleteField = async (req, res)=>{
 var GetAllFieldsByFieldOwnerID = async (req, res)=>{
     res.status(200).json(await FieldServices.GetAllFieldsByFieldOwnerID(req.params.id));
 };
+var GetFieldsByLocation = async (req, res)=>{
+    res.status(200).json(await FieldServices.GetFieldsByLocation(req.params.location));
+};
 module.exports = {
     GetAllFields,
     GetFieldByID,
     AddNewField,
     UpdateField,
     DeleteField,
-    GetAllFieldsByFieldOwnerID
+    GetAllFieldsByFieldOwnerID,
+    GetAllValidFields,
+    GetNotValidFields,
+    GetFieldsByLocation
 };

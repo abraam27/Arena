@@ -6,6 +6,7 @@ var GetAllGames = async (req, res)=>{
 var GetGameByID = async (req, res)=>{
     res.status(200).json(await GameServices.GetGameByID(req.params.id));
 };
+
 var AddNewGame = (req, res)=>{
     var newGame = new GameServices(req.body.playerId,req.body.fieldId,req.body.date,req.body.hour,"","","");
     console.log(newGame);
@@ -47,5 +48,5 @@ module.exports = {
     AddNewGame,
     UpdateGame,
     DeleteGame,
-    GetAllGamesByFieldID
+    GetAllGamesByFieldID,  
 };

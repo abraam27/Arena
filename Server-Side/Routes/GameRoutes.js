@@ -8,7 +8,9 @@ router.get("/:id",GameController.GetGameByID);
 // add new Game
 router.post("/add",GameController.AddNewGame);
 // update Game by id
-router.put("/update/:id",GameController.UpdateGame);
+router.put("/update",GameController.UpdateGame);
 // delete Game by id
 router.delete("/delete/:id",GameController.DeleteGame);
+// get all games by field id
+router.get("/field/:id",GameController.GetAllGamesByFieldID);
 module.exports = router;

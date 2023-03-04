@@ -14,44 +14,6 @@ class PlayerServices{
         this.image = image;
         this.role = role;
     }
-    static async LoginUser(userData){
-        var foundUser;
-        if(userData.userName){
-            foundUser = await Player.findOne({userName:userData.userName}).exec();
-            if(foundUser){
-                if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("-- Done -- Username is true & Password is true");
-                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"Messi"); 
-                    return token;
-                }else{
-                    console.log(" -- Unfortunately -- Username is true but Password is false");
-                    return false;
-    
-                }
-            }else{
-                console.log("username false");
-                return false;
-            }
-        }else if(userData.email){
-            foundUser = await Player.findOne({email:userData.email}).exec();
-            if(foundUser){
-                if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("-- Done -- Email is true & Password is true");
-                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"messi")   
-                    return token;
-                }else{
-                    console.log("-- Unfortunately --  Email is true but Password is false");
-                    return false;
-    
-                }
-            }else{
-                console.log("email false");
-                return false;
-            }
-        }else{
-            return false;
-        }
-    }
     static async GetAllPlayers(){
         return await Player.find({});
     }
@@ -60,9 +22,8 @@ class PlayerServices{
     }
     async AddPlayer(){
         var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role});
-        let foundPlayer = await Player.find({userName:newPlayer.userName}).exec();//null
+        let foundPlayer = await Player.find({$or:[{userName:newPlayer.userName},{email:newPlayer.email}]}).exec();//null
         if(foundPlayer.length==0){
-            //Please Login
             await newPlayer.save();
             return true;
         }else{
@@ -71,17 +32,17 @@ class PlayerServices{
         }
     }
     async UpdatePlayer(id){
-        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role})){
             return true;
         }else{
             return false;
         }
     }
     static async DeletePlayer(id){
-        return await Player.deleteOne({ _id:id});
+        return await Player.deleteOne({_id:id});
     }
 
-    static async GetAllGames (pid){
+    static async GetAllGamesByPlayerID (pid){
       let allGames = await Game.find({}).exec();//null
     //   console.log(allGames);
          
@@ -95,21 +56,5 @@ class PlayerServices{
 
 
     }
-
-    static async GetGame (pid,gameId){
-        let allGames = await Game.find({}).exec();//null
-      //   console.log(allGames);
-           
-          let foundGame =allGames.filter((p) =>{
-              return (
-                  p.playerId == pid&&
-                  p._id==gameId
-                  );        
-          });
-          console.log(foundGame);
-          return  foundGame;
-  
-  
-      }
 }
 module.exports = PlayerServices;

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import FieldForm from "./FieldForm";
 import Modal from "./Modal";
 import style from "./OwnerProfile.module.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import { redirect } from "react-router-dom";
 import {
   MDBCol,
   MDBContainer,
@@ -21,42 +22,37 @@ const OwnerProfile = () => {
 
   let OwnerToken = localStorage.getItem("userToken");
   let ownerData = jwtDecode(OwnerToken);
-
+  console.log(ownerData);
 
   return (
-    <div className="container">
+    <div className="container pt-3">
       {/* <div> */}
       {formIsVisible && (
         <Modal setFormIsVisible={setFormIsVisible}>
           <FieldForm setFormIsVisible={setFormIsVisible}></FieldForm>
         </Modal>
       )}
-      <section style={{ backgroundColor: "white" }} className="text-center">
+      <section style={{ backgroundColor: "white" }} className="text-center ">
         <MDBRow className="justify-content-between pb-3 pt-4">
           {/* <p>please add field !</p> */}
           <MDBCol sm={3}>
-            
-
-            <Link to="/myFields" className={style.btn}>
-          <input
-              className="btn btn-outline-success"
-              type="submit"
-              value="My fields"
+            <Link to="/my-fields" className={style.btn}>
+              <input
+                className="btn btn-outline-success"
+                type="submit"
+                value="My fields"
               />
-              </Link>
-
-              
+            </Link>
           </MDBCol>
           <MDBCol sm={3}>
-          <input
+            <input
               className="btn btn-outline-success"
               type="submit"
               value="Show events "
-              
             />
           </MDBCol>
           <MDBCol sm={3}>
-          <input
+            <input
               className="btn btn-outline-success"
               type="submit"
               value="Add Field "
@@ -91,7 +87,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                       {ownerData.fullName}
+                        {ownerData.fullName}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -102,7 +98,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                      {ownerData.email}
+                        {ownerData.email}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -113,7 +109,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                      {ownerData.phone}
+                        {ownerData.phone}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -125,7 +121,7 @@ const OwnerProfile = () => {
                     </MDBCol>
                     <MDBCol sm="9">
                       <MDBCardText className="text-muted">
-                      {ownerData.location}
+                        {ownerData.location}
                       </MDBCardText>
                     </MDBCol>
                   </MDBRow>
@@ -142,3 +138,9 @@ const OwnerProfile = () => {
 };
 
 export default OwnerProfile;
+
+export function routeProtectionLoader() {
+  if (localStorage.getItem("userToken")) {
+    return null;
+  } else return redirect("/login");
+}
