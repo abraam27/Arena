@@ -1,0 +1,19 @@
+body {
+    background-color:rgb(232, 222, 222);
+  }
+  
+  @media (max-width: 767.98px) {
+    .border-sm-start-none {
+      border-left: none !important;
+    }
+    .search {
+        width: 25%;
+      }
+  }
+    
+  @media screen and (max-width: 410px) {
+    .search {
+      width: 85%;
+    }
+  }
+  
