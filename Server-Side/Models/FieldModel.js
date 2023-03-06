@@ -6,9 +6,7 @@ var FieldSchema = {
     price:{type:String,pattern:"^[0-9]+$",maxLength:3,minLength:1, required:true},
     rate:{type:String,pattern:"^[1-5]+$",maxLength:1},
     fieldOwnerId:{type:String,pattern:"^[a-zA-Z0-9]+$", required:true},
-    valid:{type:String,pattern:"^[0-1]+$", required:true}
-
-
+    valid:{type:String,pattern:"^[0-1]+$"}
 
 }
 var Field = DB_Connection.model("Fields",FieldSchema);

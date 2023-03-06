@@ -3,9 +3,17 @@ const router = express.Router();
 const PlayerController = require("../Controllers/PlayerController");
 const GameController = require("../Controllers/GameController");
 const FieldController = require("../Controllers/FieldController");
+const Multer= require("../Services/multer")
+const multerPath = Multer.multerPath;
+const multerValidators= Multer.multerValidators;
+const HMR= Multer.HMR;
+const myMulter= Multer.myMulter;
 
+
+
+// update Player image
+router.put("/updateImage/:id",myMulter(multerPath.profilePic , multerValidators.image).single('image'),HMR,PlayerController.UpdateImage);
 // get all Players
-router.delete("/delete/:id",PlayerController.DeletePlayer);
 router.get("/",PlayerController.GetAllPlayers)
 // get Player by id
 router.get("/:id",PlayerController.GetPlayerByID);
@@ -15,17 +23,12 @@ router.post("/add",PlayerController.AddNewPlayer);
 router.put("/update",PlayerController.UpdatePlayer);
 // delete Player by id
 router.delete("/delete/:id",PlayerController.DeletePlayer);
-// login Player
-router.post("/login",PlayerController.PlayerLogin);
 // get the uaser his all reservations
-router.get("/games/:id",PlayerController.GetAllGames)
-// get specific reservation by Id
-router.get("/games/:id/:gameId",PlayerController.GetGame)
-// create game
-router.get("/games/create",GameController.AddNewGame)
-// delete game
-router.get("/games/:id",GameController.DeleteGame)
-// get all valid games
-router.get("/fields/valid",FieldController.GetAllValid)
-
+router.get("/games/:id",PlayerController.GetAllGamesByPlayerID);
+// change status 
+router.patch("/changeStatus/:userName",PlayerController.ChangeSatus);
+// reset password
+router.patch("/resetPassword/:userName",PlayerController.ResetPassword);
+// send email to reset password
+router.post("/emailToUpdatePw/:fullName/:email/:userName",PlayerController.SendEmailPw);
 module.exports = router;

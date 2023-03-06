@@ -2,8 +2,10 @@ const Player = require("../Models/PlayerModel");
 const bcrypt= require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Game = require("../Models/GameModel");
+const nodemailer = require("../Configiration/nodeMailer.config");
+
 class PlayerServices{
-    constructor(fullName,phone,birthDate,location,email,userName,password,image,role){
+    constructor(fullName,phone,birthDate,location,email,userName,password,image,role,status){
         this.fullName = fullName;
         this.phone = phone;
         this.birthDate = birthDate;
@@ -13,44 +15,7 @@ class PlayerServices{
         this.password = password;
         this.image = image;
         this.role = role;
-    }
-    static async LoginUser(userData){
-        var foundUser;
-        if(userData.userName){
-            foundUser = await Player.findOne({userName:userData.userName}).exec();
-            if(foundUser){
-                if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("-- Done -- Username is true & Password is true");
-                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"Messi"); 
-                    return token;
-                }else{
-                    console.log(" -- Unfortunately -- Username is true but Password is false");
-                    return false;
-    
-                }
-            }else{
-                console.log("username false");
-                return false;
-            }
-        }else if(userData.email){
-            foundUser = await Player.findOne({email:userData.email}).exec();
-            if(foundUser){
-                if(await bcrypt.compare(userData.password, foundUser.password)){
-                    console.log("-- Done -- Email is true & Password is true");
-                    const token = jwt.sign({userID:foundUser._id, fullName:foundUser.fullName, phone:foundUser.phone, birthDate:foundUser.birthDate, location:foundUser.location, email:foundUser.email, userName:foundUser.userName},"messi")   
-                    return token;
-                }else{
-                    console.log("-- Unfortunately --  Email is true but Password is false");
-                    return false;
-    
-                }
-            }else{
-                console.log("email false");
-                return false;
-            }
-        }else{
-            return false;
-        }
+        this.status=status;
     }
     static async GetAllPlayers(){
         return await Player.find({});
@@ -59,11 +24,11 @@ class PlayerServices{
         return await Player.findById(id);
     }
     async AddPlayer(){
-        var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role});
-        let foundPlayer = await Player.find({userName:newPlayer.userName}).exec();//null
+        var newPlayer = new Player({ fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role,status :this.status});
+        let foundPlayer = await Player.find({$or:[{userName:newPlayer.userName},{email:newPlayer.email}]}).exec();//null
         if(foundPlayer.length==0){
-            //Please Login
             await newPlayer.save();
+            nodemailer.sendConfirmationEmail(this.fullName,this.email,this.userName)
             return true;
         }else{
             return false;
@@ -71,17 +36,24 @@ class PlayerServices{
         }
     }
     async UpdatePlayer(id){
-        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password})){
+        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role})){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    async UpdateImage(id){
+        if(await Player.updateOne({_id:id}, {fullName: this.fullName, phone: this.phone, birthDate: this.birthDate, location: this.location, email: this.email, userName: this.userName, password: this.password, image: this.image, role:this.role})){
             return true;
         }else{
             return false;
         }
     }
     static async DeletePlayer(id){
-        return await Player.deleteOne({ _id:id});
+        return await Player.deleteOne({_id:id});
     }
 
-    static async GetAllGames (pid){
+    static async GetAllGamesByPlayerID (pid){
       let allGames = await Game.find({}).exec();//null
     //   console.log(allGames);
          
@@ -92,24 +64,27 @@ class PlayerServices{
         });
         // console.log(foundGames);
         return  foundGames;
-
-
     }
 
-    static async GetGame (pid,gameId){
-        let allGames = await Game.find({}).exec();//null
-      //   console.log(allGames);
-           
-          let foundGame =allGames.filter((p) =>{
-              return (
-                  p.playerId == pid&&
-                  p._id==gameId
-                  );        
-          });
-          console.log(foundGame);
-          return  foundGame;
-  
-  
-      }
+    static async ChangeStatus(userName){
+        if(await Player.updateOne({userName:userName}, {status: 'Active'})){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    static async ResetPassword(userName, password){
+        if(await Player.updateOne({userName:userName}, {password:password})){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    static SendEmailPw (fullName,email,userName){
+         nodemailer.sendResetEmail(fullName,email,userName);
+         return true
+    }
+
 }
 module.exports = PlayerServices;

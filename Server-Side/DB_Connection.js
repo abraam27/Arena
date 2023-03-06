@@ -4,10 +4,10 @@ mongoose.set('strictQuery', true);
 mongoose.connect(DB_URL, {useNewUrlParser:true});
 var connect = mongoose.connection;
 connect.on('connected', function() {
-    console.log('database is connected successfully');
+    console.log('database is connected successfully!');
 });
 connect.on('disconnected',function(){
-    console.log('database is disconnected successfully');
+    console.log('database is disconnected successfully!');
 })
 connect.on('error', console.error.bind(console, 'connection error:'));
 module.exports = connect;
